@@ -2,7 +2,7 @@ APScheduler==3.10.4
 blinker==1.6.3
 click==8.1.7
 colorama==0.4.6
-Flask==2.3.3
+Flask
 Flask-Admin==1.6.1
 Flask-SQLAlchemy==3.1.1
 greenlet==3.0.1
