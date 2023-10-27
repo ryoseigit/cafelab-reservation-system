@@ -33,7 +33,7 @@ def sendMail(userEmail):
     TO_ADDRESS = userEmail
     BCC = ''
     SUBJECT = 'ご予約の時間の15分前となりました。'
-    BODY = 'cafe labへのアクセスはこちら↓↓↓ \n'
+    BODY = 'cafe labは、管理棟二階３J教室にあります！！ ご来店お待ちしております！！'
     msg = create_message(FROM_ADDRESS, TO_ADDRESS, BCC, SUBJECT, BODY)
     send(FROM_ADDRESS, TO_ADDRESS, msg, MY_PASSWORD)
     
