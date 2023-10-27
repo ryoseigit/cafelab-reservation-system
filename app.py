@@ -32,7 +32,7 @@ db.init_app(app)
 
 
 class Reserve(db.Model):
-    __tablename__ = 'Reserve'
+    # __tablename__ = 'Reserve'
     # non_primary = True
     # id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     # name: Mapped[str] = mapped_column(String, nullable=False)
@@ -53,7 +53,7 @@ with app.app_context():
     db.create_all()
 
 class MyModelView(ModelView):
-    __tablename__ = 'MyModelView'
+    # __tablename__ = 'MyModelView'
     column_filters = ['date']
     column_default_sort = 'time'
 
