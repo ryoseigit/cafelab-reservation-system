@@ -11,10 +11,9 @@ import pytz
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 import os
-from dotenv import load_dotenv
 
 
-load_dotenv()
+
 class Base(DeclarativeBase):
   pass
 db = SQLAlchemy(model_class=Base)
