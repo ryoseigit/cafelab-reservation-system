@@ -41,7 +41,7 @@ class Reserve(db.Model):
     # time: Mapped[str] = mapped_column(String)
     # number: Mapped[int] = mapped_column(Integer)
     # chair: Mapped[str] = mapped_column(String)
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, autoincrement=True)
     name = Column(String, nullable=False)
     email = Column(String)
     date= Column(String) 
