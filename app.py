@@ -33,7 +33,7 @@ db.init_app(app)
 class Reserve(db.Model):
     __tablename__ = 'Reserve'
     non_primary = True
-    id: Mapped[int] = mapped_column(Integer)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
     email: Mapped[str] = mapped_column(String)
     date: Mapped[str] = mapped_column(String) 
