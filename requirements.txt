@@ -3,5 +3,4 @@ Flask
 Flask-Admin==1.6.1
 Flask-SQLAlchemy
 pytz==2022.7.1
-gunicorn
-Flask-Migrate
+gunicorn==19.9.0

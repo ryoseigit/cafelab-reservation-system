@@ -11,7 +11,6 @@ import pytz
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 import os
-from flask_migrate import Migrate
 
 
 
@@ -20,11 +19,9 @@ app = Flask(__name__)
 class Base(DeclarativeBase):
   pass
 db = SQLAlchemy(model_class=Base)
-migrate = Migrate(app, db)
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = os.getenv("secret_key")
 db.init_app(app)
 
