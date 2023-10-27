@@ -17,14 +17,16 @@ import os
 
 app = Flask(__name__)
 
-class Base(DeclarativeBase):
-  pass
-db = SQLAlchemy(model_class=Base)
+# class Base(DeclarativeBase):
+#   pass
+# db = SQLAlchemy(model_class=Base)
+
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
 app.secret_key = os.getenv("secret_key")
-db.init_app(app)
+db = SQLAlchemy(app)
+# db.init_app(app)
 
 
 
