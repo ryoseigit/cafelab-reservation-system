@@ -59,7 +59,7 @@ class MyModelView(ModelView):
     column_filters = ['date']
     column_default_sort = 'time'
     form_excluded_columns = ['email']
-
+    column_exclude_list = ['email']
 
 
 
