@@ -10,19 +10,19 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import pytz
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+import os
+from dotenv import load_dotenv
 
 
-
-
-
+load_dotenv()
 class Base(DeclarativeBase):
   pass
 db = SQLAlchemy(model_class=Base)
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///reserveList.db"
-app.secret_key = 'ryosei_secret_key'
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
+app.secret_key = os.getenv("secret_key")
 db.init_app(app)
 
 
@@ -31,6 +31,7 @@ db.init_app(app)
 
 
 class Reserve(db.Model):
+    __tablename__ = 'Reserve'
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
     email: Mapped[str] = mapped_column(String)
@@ -43,13 +44,15 @@ with app.app_context():
     db.create_all()
 
 class MyModelView(ModelView):
+    __tablename__ = 'MyModelView'
     column_filters = ['date']
     column_default_sort = 'time'
 
 class Adminuser(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  login = db.Column(db.String(50), unique=True)
-  password = db.Column(db.String(250))
+    __tablename__ = 'Adminuser'
+    id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(250))
   
 
 
@@ -70,7 +73,7 @@ def index():
         
         
         for reserve in reserves:
-            if reserve.date[:6] == "10月28日":
+            if reserve.date[:6] == today:
                 newreserves.append(reserve)
            
                 
