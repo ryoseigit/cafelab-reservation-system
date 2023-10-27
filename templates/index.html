@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="title">
+    <img src="{{ url_for('static', filename='../static/imgs/cafelab.png') }}" alt="no img">
+</div>
+
+<div class="mogura">
+    <img src="{{ url_for('static', filename='../static/imgs/mogura.png') }}" alt="">
+</div>
+
+<div class="form-container">
+    <h1>予約フォーム</h1>
+    <form method="POST">
+
+        <!-- 名前 -->
+        <div>
+            <label for="name">代表者氏名</label>
+            <div>
+                <input type="text" name="name" id="name" required>
+            </div>
+        </div>
+
+        <!-- メールアドレス -->
+        <div>
+            <label for="email">メールアドレス</label>
+            <div>
+                <input type="email" name="email" id="email" required>
+            </div>
+        </div>
+
+        <!-- 日付 -->
+        <div>
+            <label for="day">日付</label>
+            <select type="time" name="date" id="day" required>
+                <option value="">日付を選んでください</option>
+                <option value="10月28日(土)">10月28日(土)</option>
+                <option value="10月29日(日)">10月29日(日)</option>    
+            </select>
+
+        </div>
+
+
+        <!-- 時間 -->
+        <div>
+            <label for="time">時間</label>
+            <select type="time" name="time" id="time" required>
+                <option value="">時間を選んでください</option>
+                <option value="09:00">09:00</option>
+                <option value="09:30">09:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+            </select>
+        </div>
+
+        <!-- 人数 -->
+        <div>
+            <label for="number">人数</label>
+            <select type="time" name="number" id="number" required>
+                <option value="">人数を選んでください</option>
+                <option value="1">1</option>
+                <option value="2">2</option>    
+                <option value="3">3</option>    
+                <option value="4">4</option>    
+                <option value="5">5</option>    
+                <option value="6">6</option>    
+                <option value="7">7</option>    
+                <option value="8">8</option>
+            </select>
+                             
+        </div>
+        
+
+
+        <!-- 席 -->
+        <div class="chair">
+                <label class="chair-label">席の種類</label>
+                <div class="chair-select">
+                    <input class="radio-btn" type="radio" name="chair" value="カウンター">
+                    <label class="form-label" for="check1">カウンター</label>
+                </div>
+        
+                <div class="chair-select">
+                    <input class="radio-btn" type="radio" name="chair" value="テーブル">
+                    <label class="" for="chair">テーブル</label>
+                </div>
+        
+                <div class="chair-select">
+                    <input class="radio-btn" type="radio" name="chair" value="どちらでも可">
+                    <label class="" for="check3">どちらでも可</label>
+                </div>
+        </div>
+        
+        
+
+        <!-- ボタン -->
+        <button type="submit" class="btn btn-primary btn-lg" value="予約">予約する</button>
+        <div class="kome">
+            <p>※下記の予約表に名前等は表示されますが、メールアドレスは表示されません。</p>
+        </div>
+    </form>
+</div>
+
+<div class="card-container">
+    <h1>{{today}}の予約表</h1>
+        {% for newreserve in newreserves %}
+            <div class="card">
+                <h3>{{ newreserve.name }} 様</h2>
+                <p>time : {{ newreserve.time }}</p>
+                <p>number : {{ newreserve.number }}</p>
+                <p>chair : {{ newreserve.chair }}</p>
+            </div>
+        {% endfor %}      
+</div>
+{% endblock %}

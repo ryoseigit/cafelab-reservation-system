@@ -1,0 +1,4 @@
+secret.json
+__pycache__/
+venv/
+requirements.txt
