@@ -3,7 +3,8 @@ from flask import render_template, request, redirect, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+# from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import Column,Integer,String
 import datetime
 from sendMail import sendMail
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -33,13 +34,20 @@ db.init_app(app)
 class Reserve(db.Model):
     __tablename__ = 'Reserve'
     # non_primary = True
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String, nullable=False)
-    email: Mapped[str] = mapped_column(String)
-    date: Mapped[str] = mapped_column(String) 
-    time: Mapped[str] = mapped_column(String)
-    number: Mapped[int] = mapped_column(Integer)
-    chair: Mapped[str] = mapped_column(String)
+    # id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    # name: Mapped[str] = mapped_column(String, nullable=False)
+    # email: Mapped[str] = mapped_column(String)
+    # date: Mapped[str] = mapped_column(String) 
+    # time: Mapped[str] = mapped_column(String)
+    # number: Mapped[int] = mapped_column(Integer)
+    # chair: Mapped[str] = mapped_column(String)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+    email = Column(String)
+    date= Column(String) 
+    time = Column(String)
+    number = Column(Integer)
+    chair = Column(String)
 
 with app.app_context():
     db.create_all()
@@ -139,6 +147,6 @@ scheduler.start()
 
 
 
-# if __name__ == "__main__":
-#     app.run()
+if __name__ == "__main__":
+    app.run()
 
