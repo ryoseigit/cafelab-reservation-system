@@ -48,12 +48,7 @@ class MyModelView(ModelView):
     column_filters = ['date']
     column_default_sort = 'time'
 
-class Adminuser(db.Model):
-    __tablename__ = 'Adminuser'
-    id = db.Column(db.Integer, primary_key=True)
-    login = db.Column(db.String(50), unique=True)
-    password = db.Column(db.String(250))
-  
+
 
 
 admin = Admin(app)
