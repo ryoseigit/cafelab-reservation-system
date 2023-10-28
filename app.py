@@ -35,14 +35,6 @@ db = SQLAlchemy(app)
 
 class Reserve(db.Model):
     __tablename__ = 'Reserve'
-    # non_primary = True
-    # id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    # name: Mapped[str] = mapped_column(String, nullable=False)
-    # email: Mapped[str] = mapped_column(String)
-    # date: Mapped[str] = mapped_column(String) 
-    # time: Mapped[str] = mapped_column(String)
-    # number: Mapped[int] = mapped_column(Integer)
-    # chair: Mapped[str] = mapped_column(String)
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
     email = Column(String)
@@ -142,7 +134,7 @@ scheduler = BackgroundScheduler()
 
 
 scheduler.add_job(job, 'interval', minutes=30,
-    start_date="2023-10-28 14:15:00",
+    start_date="2023-10-28 14:45:00",
     end_date="2023-10-29 15:45:00")
 
 scheduler.start()
@@ -150,6 +142,6 @@ scheduler.start()
 
 
 
-if __name__ == "__main__":
-    app.run()
+# if __name__ == "__main__":
+#     app.run()
 
