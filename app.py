@@ -142,7 +142,7 @@ scheduler = BackgroundScheduler()
 
 
 scheduler.add_job(job, 'interval', minutes=30,
-    start_date="2023-10-28 08:45:00",
+    start_date="2023-10-28 14:15:00",
     end_date="2023-10-29 15:45:00")
 
 scheduler.start()
