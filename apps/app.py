@@ -1,11 +1,11 @@
-from flask import Flask
+from apps import app
 from flask import render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy import Column,Integer,String
 import datetime
-from sendMail import sendMail
-from apscheduler.schedulers.background import BackgroundScheduler
+from apps.sendMail import sendMail
+from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 import os
@@ -14,7 +14,7 @@ import pytz
 
 
 
-app = Flask(__name__)
+
 
 # class Base(DeclarativeBase):
 #   pass
@@ -106,19 +106,7 @@ def successReserve():
 
 
 
-
- 
- 
-
-
-
 # apsschedulerで定期実行
-
-scheduler = BackgroundScheduler()
-
-@scheduler.add_job("cron", 'interval', minutes=30,
-        start_date="2023-11-01 16:30:00",
-        end_date="2023-11-11 15:45:00")
 
 def job():
     with app.app_context():
@@ -133,12 +121,28 @@ def job():
                 userEmail = reserve.email
                 sendMail(userEmail)
 
+def samplejob():
+    print("done")
 
 
+scheduler = BackgroundScheduler()
+
+scheduler.add_job(job, 'interval', minutes=2,
+        start_date="2023-11-01 23:08:00",
+        end_date="2023-11-11 15:45:00")
 
 scheduler.start()
 
 
+
+# def samplejob():
+#     print("done")
+
+# scheduler = BackgroundScheduler()
+# scheduler.add_job(samplejob, 'interval', minutes=1)
+
+
+# scheduler.start()
 
 
 # if __name__ == "__main__":
