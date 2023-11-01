@@ -2,7 +2,6 @@ import smtplib
 import os
 from email.mime.text import MIMEText
 from email.utils import formatdate
-import json
 
 
 def create_message(from_addr, to_addr, bcc_addrs, subject, body):
@@ -24,9 +23,7 @@ def send(from_addr, to_addrs, msg, my_password):
     smtpobj.close()
     
 def sendMail(userEmail):
-    with open('secret.json') as f:
-        info = json.load(f)
-        
+    
     FROM_ADDRESS = os.getenv("email")
     MY_PASSWORD = os.getenv("password")
     

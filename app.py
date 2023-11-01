@@ -1,14 +1,12 @@
 from flask import Flask
-from flask import render_template, request, redirect, abort, jsonify
+from flask import render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Integer, String
-# from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Column,Integer,String
 import datetime
+from zoneinfo import ZoneInfo
 from sendMail import sendMail
 from apscheduler.schedulers.background import BackgroundScheduler
-import pytz
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 import os
@@ -47,7 +45,6 @@ with app.app_context():
     db.create_all()
 
 class MyModelView(ModelView):
-    # __tablename__ = 'MyModelView'
     column_filters = ['date']
     column_default_sort = 'time'
     form_excluded_columns = ['email']
@@ -67,12 +64,11 @@ def index():
         reserves = Reserve.query.order_by(Reserve.time)
         newreserves = []
         
-        now = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
-        today = str(now.month) + '月' + str(now.day) + '日'
-        
+        now = datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
+        today = now.strftime("%Y-%m-%d")
         
         for reserve in reserves:
-            if reserve.date[:6] == today:
+            if reserve.date == today:
                 newreserves.append(reserve)
            
                 
@@ -115,27 +111,27 @@ def successReserve():
 def job():
     with app.app_context():
         reserves = Reserve.query.order_by(Reserve.time)
-        now = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
+        now = datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
         after_15min = now + datetime.timedelta(minutes=15)
-        after_15min_date = str(after_15min.strftime("%m")) + "月" + str(after_15min.strftime("%d")) + "日"
-        after_15min_time = str(after_15min.strftime("%H:%M"))
+        after_15min_date = after_15min.strftime("%Y-%m-%d")
+        after_15min_time = after_15min.strftime("%H:%M")
         
         for reserve in reserves:
-            if reserve.date[:6]  == after_15min_date   and   reserve.time == after_15min_time:
+            if reserve.date  == after_15min_date   and   reserve.time == after_15min_time:
                 userEmail = reserve.email
                 sendMail(userEmail)
-            # else:
-            #     print(after_15min_time) 
 
-# apsschedulerの使い方
+
+
+# apsschedulerで定期実行
 
 scheduler = BackgroundScheduler()
 
 
 
 scheduler.add_job(job, 'interval', minutes=30,
-    start_date="2023-10-28 14:45:00",
-    end_date="2023-10-29 15:45:00")
+    start_date="2023-11-01 15:55:00",
+    end_date="2023-11-11 15:45:00")
 
 scheduler.start()
 
