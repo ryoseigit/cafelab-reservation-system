@@ -109,6 +109,17 @@ def successReserve():
 
  
  
+
+
+
+# apsschedulerで定期実行
+
+scheduler = BackgroundScheduler()
+
+@scheduler.add_job("cron", 'interval', minutes=30,
+        start_date="2023-11-01 16:30:00",
+        end_date="2023-11-11 15:45:00")
+
 def job():
     with app.app_context():
         reserves = Reserve.query.order_by(Reserve.time)
@@ -124,15 +135,6 @@ def job():
 
 
 
-# apsschedulerで定期実行
-
-scheduler = BackgroundScheduler()
-
-
-
-scheduler.add_job(job, 'interval', minutes=30,
-    start_date="2023-11-01 16:05:00",
-    end_date="2023-11-11 15:45:00")
 
 scheduler.start()
 
