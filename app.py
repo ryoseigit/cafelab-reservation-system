@@ -65,7 +65,7 @@ def index():
         reserves = Reserve.query.order_by(Reserve.time)
         newreserves = []
         
-        now = datetime.datetime.now(pytz("Asia/Tokyo"))
+        now = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
         today = now.strftime("%Y-%m-%d")
         
         for reserve in reserves:
@@ -112,7 +112,7 @@ def successReserve():
 def job():
     with app.app_context():
         reserves = Reserve.query.order_by(Reserve.time)
-        now = datetime.datetime.now(pytz("Asia/Tokyo"))
+        now = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
         after_15min = now + datetime.timedelta(minutes=15)
         after_15min_date = after_15min.strftime("%Y-%m-%d")
         after_15min_time = after_15min.strftime("%H:%M")
@@ -131,7 +131,7 @@ scheduler = BackgroundScheduler()
 
 
 scheduler.add_job(job, 'interval', minutes=30,
-    start_date="2023-11-01 15:55:00",
+    start_date="2023-11-01 16:05:00",
     end_date="2023-11-11 15:45:00")
 
 scheduler.start()
