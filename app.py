@@ -4,12 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy import Column,Integer,String
 import datetime
-from zoneinfo import ZoneInfo
 from sendMail import sendMail
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 import os
+import pytz
+# from zoneinfo import ZoneInfo
 
 
 
@@ -64,7 +65,7 @@ def index():
         reserves = Reserve.query.order_by(Reserve.time)
         newreserves = []
         
-        now = datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
+        now = datetime.datetime.now(pytz("Asia/Tokyo"))
         today = now.strftime("%Y-%m-%d")
         
         for reserve in reserves:
@@ -111,7 +112,7 @@ def successReserve():
 def job():
     with app.app_context():
         reserves = Reserve.query.order_by(Reserve.time)
-        now = datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
+        now = datetime.datetime.now(pytz("Asia/Tokyo"))
         after_15min = now + datetime.timedelta(minutes=15)
         after_15min_date = after_15min.strftime("%Y-%m-%d")
         after_15min_time = after_15min.strftime("%H:%M")
