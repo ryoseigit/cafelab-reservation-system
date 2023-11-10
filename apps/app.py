@@ -67,13 +67,15 @@ def index():
         
         now = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
         today = now.strftime("%Y-%m-%d")
+        after_15min = now + datetime.timedelta(minutes=15)
+        after_15min_time = after_15min.strftime("%H:%M")
         
         for reserve in reserves:
             if reserve.date == today:
                 newreserves.append(reserve)
            
                 
-        return render_template('index.html', newreserves=newreserves, today=today)
+        return render_template('index.html', newreserves=newreserves, today=today, after_15min_time=after_15min_time)
 
     else:
         name = request.form.get("name")
@@ -90,12 +92,10 @@ def index():
         db.session.add(reserve)
         db.session.commit()
         
-        now = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
-        after_15min = now + datetime.timedelta(minutes=15)
-        after_15min_date = after_15min.strftime("%Y-%m-%d")
-        after_15min_date
         
-        return redirect("/successReserve" )
+        
+        
+        return redirect("/successReserve" , after_15min_time=after_15min_time)
     
         
 
