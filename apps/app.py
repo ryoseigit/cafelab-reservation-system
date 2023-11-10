@@ -89,6 +89,8 @@ def index():
 
         db.session.add(reserve)
         db.session.commit()
+        userEmail = "ryosei.from.kesennuma.1013@gmail.com"
+        sendMail(userEmail)
         
         return redirect("/successReserve" )
     
