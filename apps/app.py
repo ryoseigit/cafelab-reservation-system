@@ -50,10 +50,10 @@ def example():
 scheduler = BackgroundScheduler()
 
 scheduler.add_job(example, 'interval', minutes=2,
-        start_date="2023-11-10 21:29:00",
+        start_date="2023-11-10 21:36:00",
         end_date="2023-11-11 15:45:00")
 
-@app.before_request
+@app.before_first_request
 def start_scheduler():
     scheduler.start()
 
