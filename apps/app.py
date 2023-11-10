@@ -10,7 +10,6 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 import os
 import pytz
-# from zoneinfo import ZoneInfo
 
 
 
@@ -26,6 +25,37 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
 app.secret_key = os.getenv("secret_key")
 db = SQLAlchemy(app)
 # db.init_app(app)
+
+
+# apsschedulerで定期実行
+
+def job():
+    with app.app_context():
+        reserves = Reserve.query.order_by(Reserve.time)
+        now = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
+        after_15min = now + datetime.timedelta(minutes=15)
+        after_15min_date = after_15min.strftime("%Y-%m-%d")
+        after_15min_time = after_15min.strftime("%H:%M")
+        
+        for reserve in reserves:
+            if reserve.date  == after_15min_date   and   reserve.time == after_15min_time:
+                userEmail = reserve.email
+                sendMail(userEmail)
+
+
+def example():
+    userEmail = "ryosei.from.kesennuma.1013@gmail.com"
+    sendMail(userEmail)
+
+scheduler = BackgroundScheduler()
+
+scheduler.add_job(example, 'interval', minutes=2,
+        start_date="2023-11-10 21:29:00",
+        end_date="2023-11-11 15:45:00")
+
+@app.before_request
+def start_scheduler():
+    scheduler.start()
 
 
 
@@ -106,50 +136,5 @@ def successReserve():
 
 
 
-    
-
-
-
-
-# apsschedulerで定期実行
-
-def job():
-    with app.app_context():
-        reserves = Reserve.query.order_by(Reserve.time)
-        now = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
-        after_15min = now + datetime.timedelta(minutes=15)
-        after_15min_date = after_15min.strftime("%Y-%m-%d")
-        after_15min_time = after_15min.strftime("%H:%M")
-        
-        for reserve in reserves:
-            if reserve.date  == after_15min_date   and   reserve.time == after_15min_time:
-                userEmail = reserve.email
-                sendMail(userEmail)
-
 def samplejob():
     print("done")
-
-
-scheduler = BackgroundScheduler()
-
-scheduler.add_job(job, 'interval', minutes=2,
-        start_date="2023-11-01 23:20:00",
-        end_date="2023-11-11 15:45:00")
-
-scheduler.start()
-
-
-
-# def samplejob():
-#     print("done")
-
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(samplejob, 'interval', minutes=1)
-
-
-# scheduler.start()
-
-
-# if __name__ == "__main__":
-#     app.run()
-
