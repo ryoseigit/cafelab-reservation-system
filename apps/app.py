@@ -89,8 +89,11 @@ def index():
 
         db.session.add(reserve)
         db.session.commit()
-        userEmail = "ryosei.from.kesennuma.1013@gmail.com"
-        sendMail(userEmail)
+        
+        now = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
+        after_15min = now + datetime.timedelta(minutes=15)
+        after_15min_date = after_15min.strftime("%Y-%m-%d")
+        after_15min_date
         
         return redirect("/successReserve" )
     
