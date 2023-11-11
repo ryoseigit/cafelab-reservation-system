@@ -31,6 +31,8 @@ db = SQLAlchemy(app)
 
 
 # apsschedulerで定期実行
+# startdateの9時間後にスタート
+
 
 def job():
     with app.app_context():
@@ -57,7 +59,6 @@ scheduler.add_job(job, 'interval', minutes=30,
 @app.before_first_request
 def start_scheduler():
     scheduler.start()
-# startdateの9時間後にスタート
 
 
 
@@ -98,15 +99,14 @@ def index():
         
         now = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
         today = now.strftime("%Y-%m-%d")
-        after_15min = now + datetime.timedelta(minutes=15)
-        after_15min_time = after_15min.strftime("%H:%M")
+        
         
         for reserve in reserves:
             if reserve.date == today:
                 newreserves.append(reserve)
            
                 
-        return render_template('index.html', newreserves=newreserves, today=today, after_15min_time=after_15min_time)
+        return render_template('index.html', newreserves=newreserves, today=today)
 
     else:
         name = request.form.get("name")
@@ -126,7 +126,7 @@ def index():
         
         
         
-        return redirect("/successReserve" , after_15min_time=after_15min_time)
+        return redirect("/successReserve")
     
         
 
