@@ -52,8 +52,8 @@ def job():
 scheduler = BackgroundScheduler()
 
 scheduler.add_job(job, 'interval', minutes=30,
-        start_date="2023-11-11 09:00:00",
-        end_date="2024-01-01 00:00:00")
+        start_date="2023-11-11 10:45:00",
+        end_date="2024-01-01 00:15:00")
 
 
 @app.before_first_request
