@@ -27,6 +27,9 @@ db = SQLAlchemy(app)
 # db.init_app(app)
 
 
+
+
+
 # apsschedulerで定期実行
 
 def job():
@@ -43,20 +46,18 @@ def job():
                 sendMail(userEmail)
 
 
-def example():
-    userEmail = "ryosei.from.kesennuma.1013@gmail.com"
-    sendMail(userEmail)
 
 scheduler = BackgroundScheduler()
 
-scheduler.add_job(example, 'interval', minutes=2,
-        start_date="2023-11-10 21:36:00",
-        end_date="2023-11-11 15:45:00")
+scheduler.add_job(job, 'interval', minutes=30,
+        start_date="2023-11-11 09:00:00",
+        end_date="2024-01-01 00:00:00")
+
 
 @app.before_first_request
 def start_scheduler():
     scheduler.start()
-
+# startdateの9時間後にスタート
 
 
 
@@ -135,6 +136,3 @@ def successReserve():
     return render_template('successReserve.html')
 
 
-
-def samplejob():
-    print("done")
