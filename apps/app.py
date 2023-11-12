@@ -78,7 +78,8 @@ with app.app_context():
     db.create_all()
 
 class MyModelView(ModelView):
-    column_filters = ['date']
+    # column_filters = ['date']
+    column_default_sort = 'date'
     column_default_sort = 'time'
     form_excluded_columns = ['email']
     column_exclude_list = ['email']
