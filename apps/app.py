@@ -5,7 +5,7 @@ from sqlalchemy import Integer, String
 from sqlalchemy import Column,Integer,String
 import datetime
 from apps.sendMail import sendMail
-from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 import os
@@ -78,8 +78,7 @@ with app.app_context():
     db.create_all()
 
 class MyModelView(ModelView):
-    # column_filters = ['date']
-    column_default_sort = 'date'
+    column_filters = ['date']
     column_default_sort = 'time'
     form_excluded_columns = ['email']
     column_exclude_list = ['email']
